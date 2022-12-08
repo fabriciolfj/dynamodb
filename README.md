@@ -82,6 +82,7 @@
 - isso impacta na nossa carga de trabalho e no tipo de leitura / gravação (leitura altamente consistente, final consistente e transacional)
 - sob demanda, indicada quando não conhecemos nossa demanda, não tempos essa preocupação
 
+
 ## Tipos de tabela
 - o dynamodb oferece 2 tipos de tabela:
   - standard -> modelo padrão
@@ -96,4 +97,8 @@ SELECT AlbumTitle, Year, Price
 FROM Music
 WHERE Artist='No One You Know' AND SongTitle = 'Call Me Today' 
 ```
+- ha um limite de 1 mb em dadso retornados na consulta ao dynamodb (caso precise de mais dados, utiliza a estratégia de paginação)
+  - tanto uso do query/scan
+  - como PartiQL
+#Configurar o DynamoDB (serviço da Web)
 
