@@ -102,6 +102,6 @@ WHERE Artist='No One You Know' AND SongTitle = 'Call Me Today'
   - tanto uso do query/scan
   - como PartiQL
   - 
-# trabalho com tabelas -> Considerações ao mudar o modo de capacidade de leitura/gravação
+# continuar -> https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/getting-started-step-3.html
 
 
