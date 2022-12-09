@@ -1,11 +1,12 @@
 # dynamodb
 - Para saber mais sobre overloading de index no dynamodb https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-gsi-overloading.html
-- codigos de exemplo me java sobre dynamodb https://github.com/aws-samples/aws-dynamodb-examples/tree/master/DynamoDB-SDK-Examples/java
+- codigos de exemplo me java sobre dynamodb https://github.com/aws-samples/aws-dynamodb-examples/tree/master/DynamoDB-SDK-Examples/java e
+- https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javav2/example_code/dynamodb/src/main/java/com/example/dynamodb
 
 ## Alguns conceitos do dynamodb
 - temos alguns tipos de chaves primárias:
   - chave simples -> onde o chave fornecida é a partição aonde será armazenada (por traz o dynamodb gera um hash da chave, e o resultado é o local de armazenamento)
-  - chave composta -> aonde possui a chave e a chave de ordenação
+  - chave composta -> aonde possui a primary key (hash) e a chave de ordenação (range)
 - alem das chaves, posso criar o index secundários, e projetar quais atributos serão retornados.
 - existe 2 tipos de index secundários:
   -  global -> quando o index composto (chave + chave de ordenação), é diferente da chave principal
@@ -100,5 +101,7 @@ WHERE Artist='No One You Know' AND SongTitle = 'Call Me Today'
 - ha um limite de 1 mb em dadso retornados na consulta ao dynamodb (caso precise de mais dados, utiliza a estratégia de paginação)
   - tanto uso do query/scan
   - como PartiQL
-#Configurar o DynamoDB (serviço da Web)
+  - 
+# trabalho com tabelas -> Considerações ao mudar o modo de capacidade de leitura/gravação
+
 
