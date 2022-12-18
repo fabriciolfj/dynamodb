@@ -90,6 +90,11 @@
   - Standard-Infrequent Access -> pouca utilizada, ideal para logs ou histórico
 - Obter informações sobre uma tabela
 
+## TTL (tempo de vida)
+- temos que adicionar um campo na tabela
+- habilitar nele o ttl
+- devemos salvar informação no formato timestamp, com a data/hora de expiração
+
 ## Consulta PartiQL
 - uma api do dynamodb que aceita consulta sql
 - dentro da aplicação deveremos utilizar o ExecuteStatement
@@ -98,7 +103,7 @@ SELECT AlbumTitle, Year, Price
 FROM Music
 WHERE Artist='No One You Know' AND SongTitle = 'Call Me Today' 
 ```
-- ha um limite de 1 mb em dadso retornados na consulta ao dynamodb (caso precise de mais dados, utiliza a estratégia de paginação)
+- ha um limite de 1 mb em dados retornados na consulta ao dynamodb (caso precise de mais dados, utiliza a estratégia de paginação)
   - tanto uso do query/scan
   - como PartiQL
   - 
