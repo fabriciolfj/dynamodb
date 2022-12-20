@@ -7,6 +7,11 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
   range_key      = "SongTitle"
 
   attribute {
+    name = "AlbumTitle"
+    type = "S"
+  }
+
+  attribute {
     name = "Artist"
     type = "S"
   }
@@ -16,10 +21,12 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
     type = "S"
   }
 
-
-  ttl {
-    attribute_name = "TimeToExist"
-    enabled        = false
+  global_secondary_index {
+    name               = "AlbumTitle-index"
+    hash_key           = "AlbumTitle"
+    write_capacity     = 5
+    read_capacity      = 10
+    projection_type    = "ALL"
   }
 
   tags = {

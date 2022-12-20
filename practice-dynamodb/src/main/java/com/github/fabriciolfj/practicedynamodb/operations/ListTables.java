@@ -1,5 +1,6 @@
 package com.github.fabriciolfj.practicedynamodb.operations;
 
+import com.github.fabriciolfj.practicedynamodb.config.ConfigureDynamoDb;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -12,16 +13,8 @@ import java.util.List;
 public class ListTables {
 
     public static void main(String[] args) {
-
-        System.out.println("Listing your Amazon DynamoDB tables:\n");
-        ProfileCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create();
-        Region region = Region.SA_EAST_1;
-        DynamoDbClient ddb = DynamoDbClient.builder()
-                .credentialsProvider(credentialsProvider)
-                .region(region)
-                .build();
-        listAllTables(ddb);
-        ddb.close();
+        listAllTables(ConfigureDynamoDb.getClient());
+        ConfigureDynamoDb.close();
     }
 
     public static void listAllTables(DynamoDbClient ddb){
