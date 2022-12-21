@@ -11,7 +11,7 @@ public class GravarItem {
         try {
             var client = ConfigureDynamoDb.getDynamodbEnhancedClient();
             var table = client.table("Music", TableSchema.fromBean(Music.class));
-            var music = new Music("Beto", "Da boa", "nao sei");
+            var music = new Music("Beto", "media ", "nao sei");
 
             table.putItem(music);
         } catch (DynamoDbException e) {
