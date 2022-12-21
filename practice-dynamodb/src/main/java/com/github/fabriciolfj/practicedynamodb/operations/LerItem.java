@@ -23,11 +23,10 @@ public class LerItem {
 
         QueryRequest request = QueryRequest.builder()
                 .tableName("Music")
-                .keyConditionExpression(alias + " = :" + keyName)
                 .expressionAttributeNames(nameAlias)
+                .keyConditionExpression(alias + " = :" + keyName)
                 .expressionAttributeValues(atrValues)
                 .build();
-
         try {
             var response = client.query(request);
             System.out.println(response.items());
