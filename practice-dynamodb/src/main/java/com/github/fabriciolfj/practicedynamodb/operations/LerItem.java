@@ -19,12 +19,12 @@ public class LerItem {
         nameAlias.put(alias, keyName);
 
         HashMap<String, AttributeValue> atrValues = new HashMap<>();
-        atrValues.put(":test", AttributeValue.builder().s(value).build());
+        atrValues.put(":valorcondicional", AttributeValue.builder().s(value).build());
 
         QueryRequest request = QueryRequest.builder()
                 .tableName("Music")
                 .expressionAttributeNames(nameAlias)
-                .keyConditionExpression(alias + " = :test" )
+                .keyConditionExpression(alias + " = :valorcondicional" )
                 .expressionAttributeValues(atrValues)
                 .build();
         try {
