@@ -1,5 +1,11 @@
 package com.github.fabriciolfj.practicedynamodb.config;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.regions.Region;
@@ -12,6 +18,10 @@ public class ConfigureDynamoDb {
     public static DynamoDbEnhancedClient getDynamodbEnhancedClient() {
         return DynamoDbEnhancedClient.builder()
                 .dynamoDbClient(getClient()).build();
+    }
+
+    public static AmazonDynamoDB getAmazonDynamodbClient() {
+        return AmazonDynamoDBClientBuilder.standard().build();
     }
 
     public static DynamoDbClient getClient() {

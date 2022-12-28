@@ -107,6 +107,37 @@ WHERE Artist='No One You Know' AND SongTitle = 'Call Me Today'
   - tanto uso do query/scan
   - como PartiQL
   - 
-# continuar -> https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/Programming.html
+# Interfaces para uso
+- existem algumas interfaces de uso que podemos utilizar em operações ao dynamodb
+- por exemplo, a interface de persistência, onde podemos criar objetos que representam os dados no dynamo e os utilizamos para consulta:
+```
+    public static void main(String[] args) {
+        var client = ConfigureDynamoDb.getAmazonDynamodbClient();
+        DynamoDBMapper mapper = new DynamoDBMapper(client);
 
+        Music keySchema = new Music();
+        keySchema.setArtist("Beto");
+        keySchema.setSongTitle("media ");
+
+        try {
+            Music result = mapper.load(keySchema);
+            if (result != null) {
+                System.out.println(
+                        "The song was released in "+ result.getArtist());
+            } else {
+                System.out.println("No matching song was found");
+            }
+        } catch (Exception e) {
+            System.err.println("Unable to retrieve data: ");
+            System.err.println(e.getMessage());
+        }
+    }
+```
+
+# Tratamento de erros
+- quando se utiliza aws sdk para comunicação com o dyanamodb, esta é transparente ao cliente
+- como token de autorização nas requisições por exemplo
+- em caso de falha, seja token expirado por exemplo, aconselha-se utilizar uma mecanismo de retry exponencial
+
+# continuar Interfaces de programação de nível superior para o DynamoDB
 
