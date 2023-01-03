@@ -26,7 +26,7 @@ public class Music {
 
     @DynamoDbPartitionKey
     @DynamoDbAttribute(value = "Artist")
-    @DynamoDBHashKey(attributeName="Artist")//usado apenas para consulta
+    @DynamoDBHashKey(attributeName="Artist")//usado para consulta ou gravacao
     public String getArtist() {
         return artist;
     }
@@ -56,5 +56,14 @@ public class Music {
     @DynamoDBAttribute(attributeName = "Year")//usado apenas para consulta
     public void setAlbumTitle(String albumTitle) {
         this.albumTitle = albumTitle;
+    }
+
+    @Override
+    public String toString() {
+        return "Music{" +
+                "artist='" + artist + '\'' +
+                ", songTitle='" + songTitle + '\'' +
+                ", albumTitle='" + albumTitle + '\'' +
+                '}';
     }
 }

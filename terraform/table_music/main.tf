@@ -1,29 +1,30 @@
 resource "aws_dynamodb_table" "basic-dynamodb-table" {
-  name           = "Music"
+  name           = "Product"
   billing_mode   = "PROVISIONED"
   read_capacity  = 20
   write_capacity = 20
-  hash_key       = "Artist"
-  range_key      = "SongTitle"
+  hash_key       = "id"
+  range_key      = "dataCadastro"
 
   attribute {
-    name = "AlbumTitle"
+    name = "id"
     type = "S"
   }
 
   attribute {
-    name = "Artist"
+    name = "dataCadastro"
     type = "S"
   }
 
   attribute {
-    name = "SongTitle"
+    name = "categoria"
     type = "S"
   }
 
   global_secondary_index {
-    name               = "AlbumTitle-index"
-    hash_key           = "AlbumTitle"
+    name               = "categoria-index"
+    hash_key           = "id"
+    range_key           = "categoria"
     write_capacity     = 5
     read_capacity      = 10
     projection_type    = "ALL"
