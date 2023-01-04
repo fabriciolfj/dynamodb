@@ -196,3 +196,5 @@ public class Reply {
 - em caso de falha, seja token expirado por exemplo, aconselha-se utilizar uma mecanismo de retry exponencial
 
 
+- continuar https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/DynamoDBMapper.Methods.html parei no scan
+

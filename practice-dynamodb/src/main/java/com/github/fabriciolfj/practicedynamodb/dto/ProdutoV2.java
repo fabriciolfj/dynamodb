@@ -3,14 +3,13 @@ package com.github.fabriciolfj.practicedynamodb.dto;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 @DynamoDBTable(tableName = "Product")
-public class Produto {
+public class ProdutoV2 {
 
     private String id;
     private String dataCadastro;
     private String categoria;
     private String descricao;
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "categoria-index")
     @DynamoDBHashKey(attributeName="id")
     public String getId() {
         return id;
@@ -20,8 +19,7 @@ public class Produto {
         this.id = id;
     }
 
-    @DynamoDBAttribute(attributeName = "dataCadastro")
-    @DynamoDBRangeKey(attributeName = "dataCadastro")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "dataCadastro-index", attributeName = "dataCadastro")
     public String getDataCadastro() {
         return dataCadastro;
     }
@@ -30,8 +28,8 @@ public class Produto {
         this.dataCadastro = dataCadastro;
     }
 
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "categoria-index")
-    @DynamoDBAttribute(attributeName = "categoria")
+    @DynamoDBRangeKey(attributeName = "categoria")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "dataCadastro-index", attributeName = "categoria")
     public String getCategoria() {
         return categoria;
     }

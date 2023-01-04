@@ -4,7 +4,7 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
   read_capacity  = 20
   write_capacity = 20
   hash_key       = "id"
-  range_key      = "dataCadastro"
+  range_key      = "categoria"
 
   attribute {
     name = "id"
@@ -22,9 +22,9 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
   }
 
   global_secondary_index {
-    name               = "categoria-index"
-    hash_key           = "id"
-    range_key           = "categoria"
+    name               = "dataCadastro-index"
+    hash_key           = "categoria"
+    range_key           = "dataCadastro"
     write_capacity     = 5
     read_capacity      = 10
     projection_type    = "ALL"
