@@ -168,6 +168,18 @@ public class Reply {
    // Additional properties go here.
 }
 ```
+- para o mapeamento de um index secundario global, utilizamos o formato abaixo:
+````
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "dataCadastro-index", attributeName = "dataCadastro")
+    public String getDataCadastro() {
+        return dataCadastro;
+    }
+    
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "dataCadastro-index", attributeName = "categoria")
+    public String getCategoria() {
+        return categoria;
+    }
+````
 - um ponto importante e a respeito da data, que vemos utilizar o formato da iso 8601
 - segue um exemplo abaixo:
 ```
@@ -195,6 +207,40 @@ public class Reply {
 - como token de autorização nas requisições por exemplo
 - em caso de falha, seja token expirado por exemplo, aconselha-se utilizar uma mecanismo de retry exponencial
 
+# Configuração personalizada para O DynamoDBMapper
+- existe alguns enuns que podemos configurar, como o a forma de carregamento paginada, qualidade dos dados na consulta e salvamento.
+```
+AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
 
-- continuar https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/DynamoDBMapper.Methods.html parei no scan
+DynamoDBMapperConfig mapperConfig = DynamoDBMapperConfig.builder()
+        .withSaveBehavior(DynamoDBMapperConfig.SaveBehavior.CLOBBER)
+        .withConsistentReads(DynamoDBMapperConfig.ConsistentReads.CONSISTENT)
+        .withTableNameOverride(null)
+        .withPaginationLoadingStrategy(DynamoDBMapperConfig.PaginationLoadingStrategy.EAGER_LOADING)
+    .build();
+
+DynamoDBMapper mapper = new DynamoDBMapper(client, mapperConfig);
+```
+## Algumas opcoes
+
+### Paginação
+
+#### LAZY_LOADING
+- carrega os demais dados quando possível e mantém todos os resultados na memória
+
+#### EAGER_LOADING
+- carrega todos dados quando a lista é inicializada
+
+#### ITERATION_ONLY
+- so pode haver um iterador na lista, e mantem na memoria apenas dados de uma pagina. Ideal para grande volume de dados
+
+### Consistencia
+- eventual -> default
+- consistente -> garante que a informação foi persistida na tabela, mas aumenta o custo
+
+### SaveBehavior
+- update -> default, atualiza os itens mapeados e insere dados default nos não mapeados  ou passados na requisição
+- clobber -> recria os itens somente com os dados passados.
+ 
+- continuar https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/DynamoDBMapper.OptimisticLocking.html
 
