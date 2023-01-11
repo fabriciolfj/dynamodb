@@ -244,3 +244,59 @@ DynamoDBMapper mapper = new DynamoDBMapper(client, mapperConfig);
  
 - continuar https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/DynamoDBMapper.OptimisticLocking.html
 
+## Bloqueio otimista
+- o dynamodb versiona o registro, afim de garantir que o dado que você está atualizando, é o mesmo que encontra-se no dynamodb
+- evitando que outro atualize o registro que você esta atualizando
+- o incremente da versão é feita pela sdk aws java automaticamente, abaixo um exemplo no uso da anotação de versionamento.
+```
+@DynamoDBTable(tableName="ProductCatalog")
+public class CatalogItem {
+
+    private Integer id;
+    private String title;
+    private String ISBN;
+    private Set<String> bookAuthors;
+    private String someProp;
+    private Long version;
+
+    @DynamoDBHashKey(attributeName="Id")
+    public Integer getId() { return id; }
+    public void setId(Integer Id) { this.id = Id; }
+
+    @DynamoDBAttribute(attributeName="Title")
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    @DynamoDBAttribute(attributeName="ISBN")
+    public String getISBN() { return ISBN; }
+    public void setISBN(String ISBN) { this.ISBN = ISBN;}
+
+    @DynamoDBAttribute(attributeName = "Authors")
+    public Set<String> getBookAuthors() { return bookAuthors; }
+    public void setBookAuthors(Set<String> bookAuthors) { this.bookAuthors = bookAuthors; }
+
+    @DynamoDBIgnore
+    public String getSomeProp() { return someProp;}
+    public void setSomeProp(String someProp) {this.someProp = someProp;}
+
+    @DynamoDBVersionAttribute
+    public Long getVersion() { return version; }
+    public void setVersion(Long version) { this.version = version;}
+}
+```
+- observações:
+  -  transações não dão suporte ao bloqueio otiminista
+  - para desabilitar, pode-se configurar um mapperconfig com CLOBBER.
+```
+DynamoDBMapper mapper = new DynamoDBMapper(client);
+
+// Load a catalog item.
+CatalogItem item = mapper.load(CatalogItem.class, 101);
+item.setTitle("This is a new title for the item");
+...
+// Save the item.
+mapper.save(item,
+    new DynamoDBMapperConfig(
+        DynamoDBMapperConfig.SaveBehavior.CLOBBER));
+```
+
